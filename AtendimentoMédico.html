@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recepção Médica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #registros {
+            margin-top: 20px;
+        }
+        #registros p {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recepção Médica</h1>
+        <form id="formPaciente">
+            <label for="nome">Nome do Paciente:</label>
+            <input type="text" id="nome" name="nome" placeholder="Digite o nome do paciente">
+
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade" placeholder="Digite a idade">
+
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF">
+
+            <label for="data">Data da Consulta:</label>
+            <input type="date" id="data" name="data">
+
+            <label for="especialidade">Especialidade:</label>
+            <select id="especialidade" name="especialidade">
+                <option value="clinico-geral">Clínico Geral</option>
+                <option value="cardiologia">Cardiologia</option>
+                <option value="dermatologia">Dermatologia</option>
+                <option value="pediatria">Pediatria</option>
+                <option value="ortopedia">Ortopedia</option>
+            </select>
+
+            <label for="observacoes">Observações:</label>
+            <textarea id="observacoes" name="observacoes" rows="4" placeholder="Alguma observação?"></textarea>
+
+            <button type="button" onclick="registrarPaciente()">Registrar</button>
+        </form>
+
+        <button type="button" onclick="mostrarRegistros()">Ver Registros</button>
+
+        <div id="registros"></div>
+    </div>
+
+    <script>
+        // Array para armazenar os registros
+        let registros = [];
+
+        // Função para registrar o paciente
+        function registrarPaciente() {
+            const nome = document.getElementById('nome').value;
+            const idade = document.getElementById('idade').value;
+            const cpf = document.getElementById('cpf').value;
+            const data = document.getElementById('data').value;
+            const especialidade = document.getElementById('especialidade').value;
+            const observacoes = document.getElementById('observacoes').value;
+
+            if (nome && idade && cpf && data && especialidade && observacoes) {
+                // Criar um objeto de paciente
+                const paciente = {
+                    nome: nome,
+                    idade: idade,
+                    cpf: cpf,
+                    data: data,
+                    especialidade: especialidade,
+                    observacoes: observacoes
+                };
+
+                // Adicionar ao array de registros
+                registros.push(paciente);
+
+                // Limpar os campos após o registro
+                document.getElementById('nome').value = '';
+                document.getElementById('idade').value = '';
+                document.getElementById('cpf').value = '';
+                document.getElementById('data').value = '';
+                document.getElementById('especialidade').value = 'clinico-geral';
+                document.getElementById('observacoes').value = '';
+
+                alert('Paciente registrado com sucesso!');
+            } else {
+                alert('Por favor, preencha todos os campos!');
+            }
+        }
+
+        // Função para mostrar os registros
+        function mostrarRegistros() {
+            const listaRegistros = document.getElementById('registros');
+            listaRegistros.innerHTML = ''; // Limpa a lista antes de mostrar os novos registros
+
+            if (registros.length === 0) {
+                listaRegistros.innerHTML = '<p>Nenhum registro encontrado.</p>';
+            } else {
+                registros.forEach((paciente, index) => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <p><strong>Nome:</strong> ${paciente.nome} <br>
+                        <strong>Idade:</strong> ${paciente.idade} <br>
+                        <strong>CPF:</strong> ${paciente.cpf} <br>
+                        <strong>Data da Consulta:</strong> ${paciente.data} <br>
+                        <strong>Especialidade:</strong> ${paciente.especialidade} <br>
+                        <strong>Observações:</strong> ${paciente.observacoes}</p>
+                    `;
+                    listaRegistros.appendChild(div);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
