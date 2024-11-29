@@ -86,6 +86,15 @@
                 <option value="ortopedia">Ortopedia</option>
             </select>
 
+            <label for="postinho">Postinho (Boa Família):</label>
+            <input type="text" id="postinho" name="postinho" placeholder="Digite o nome do postinho">
+
+            <label for="atestado">Precisa de atestado:</label>
+            <input type="checkbox" id="atestado" name="atestado">
+
+            <label for="urgencia">É com urgência:</label>
+            <input type="checkbox" id="urgencia" name="urgencia">
+
             <label for="observacoes">Observações:</label>
             <textarea id="observacoes" name="observacoes" rows="4" placeholder="Alguma observação?"></textarea>
 
@@ -108,9 +117,12 @@
             const cpf = document.getElementById('cpf').value;
             const data = document.getElementById('data').value;
             const especialidade = document.getElementById('especialidade').value;
+            const postinho = document.getElementById('postinho').value;
+            const atestado = document.getElementById('atestado').checked;
+            const urgencia = document.getElementById('urgencia').checked;
             const observacoes = document.getElementById('observacoes').value;
 
-            if (nome && idade && cpf && data && especialidade && observacoes) {
+            if (nome && idade && cpf && data && especialidade && postinho && observacoes !== null) {
                 // Criar um objeto de paciente
                 const paciente = {
                     nome: nome,
@@ -118,6 +130,9 @@
                     cpf: cpf,
                     data: data,
                     especialidade: especialidade,
+                    postinho: postinho,
+                    atestado: atestado ? "Sim" : "Não",
+                    urgencia: urgencia ? "Sim" : "Não",
                     observacoes: observacoes
                 };
 
@@ -130,6 +145,9 @@
                 document.getElementById('cpf').value = '';
                 document.getElementById('data').value = '';
                 document.getElementById('especialidade').value = 'clinico-geral';
+                document.getElementById('postinho').value = '';
+                document.getElementById('atestado').checked = false;
+                document.getElementById('urgencia').checked = false;
                 document.getElementById('observacoes').value = '';
 
                 alert('Paciente registrado com sucesso!');
@@ -154,6 +172,9 @@
                         <strong>CPF:</strong> ${paciente.cpf} <br>
                         <strong>Data da Consulta:</strong> ${paciente.data} <br>
                         <strong>Especialidade:</strong> ${paciente.especialidade} <br>
+                        <strong>Postinho:</strong> ${paciente.postinho} <br>
+                        <strong>Atestado:</strong> ${paciente.atestado} <br>
+                        <strong>Urgência:</strong> ${paciente.urgencia} <br>
                         <strong>Observações:</strong> ${paciente.observacoes}</p>
                     `;
                     listaRegistros.appendChild(div);
